@@ -284,6 +284,22 @@ footer{background:var(--dark);color:rgba(255,255,255,.65);padding-block:70px 30p
 .foot .brand em{font-style:normal;color:#8e9cff}
 .foot ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .foot a:hover{color:#fff}
+.credit a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+/* Annonce (popup comme sur le site d'origine) */
+#ann{position:fixed;inset:0;z-index:96;background:rgba(11,12,16,.6);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:20px}
+#ann.on{display:flex}
+#ann .box{position:relative;background:#fff;color:var(--ink);border-radius:24px;max-width:440px;width:100%;max-height:92vh;overflow:auto;box-shadow:0 30px 80px rgba(0,0,0,.35);animation:annIn .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes annIn{from{opacity:0;transform:translateY(20px) scale(.96)}}
+#ann img{display:block;width:100%;height:auto;border-radius:24px 24px 0 0}
+#ann .bd{padding:22px 24px 24px}
+#ann .badge{display:inline-block;background:#e5383b;color:#fff;font-size:12px;font-weight:600;padding:5px 12px;border-radius:99px}
+#ann h3{font-size:28px;letter-spacing:-.03em;margin:12px 0 8px}
+#ann p{color:var(--muted);margin:0 0 18px}
+#ann .acts{display:flex;gap:10px;flex-wrap:wrap}
+#ann .acts a,#ann .acts button{flex:1;min-width:130px;text-align:center;padding:13px 18px;border-radius:99px;font:inherit;font-weight:600;cursor:pointer}
+#ann .acts a{background:#25d366;color:#fff;border:0}
+#ann .acts button{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+#ann .ax{position:absolute;top:12px;right:12px;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.92);font-size:18px;cursor:pointer}
 .copy{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:46px;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
 .wa{position:fixed;right:var(--gr);bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:70;width:60px;height:60px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 14px 30px -10px rgba(0,0,0,.35)}
 .wa svg{width:28px;height:28px;fill:#fff}
@@ -526,8 +542,8 @@ footer{background:var(--dark);color:rgba(255,255,255,.65);padding-block:70px 30p
 <footer class="wrap">
   <div class="max">
     <div class="foot"><div class="brand">Speak <em>Up.</em></div>
-      <ul><li><a href="https://www.facebook.com/speakupci">Facebook</a></li><li><a href="https://www.tiktok.com/@speakupci">TikTok</a></li><li><a href="https://www.speakupci.net/annonces">Annonces</a></li><li><a href="https://www.speakupci.net/media/site/brochure-speak-up-ci.pdf">Brochure PDF</a></li></ul></div>
-    <div class="copy"><span>© 2026 Speak Up Côte d'Ivoire</span><span>Cabinet de formation agréé · Abidjan</span></div>
+      <ul><li><a href="https://www.facebook.com/profile.php?id=61586812528619" target="_blank" rel="noopener">Facebook</a></li><li><a href="https://www.tiktok.com/@speakupci">TikTok</a></li><li><a href="#annonce" id="openAnn">Annonces</a></li><li><a href="https://www.speakupci.net/media/site/brochure-speak-up-ci.pdf">Brochure PDF</a></li></ul></div>
+    <div class="copy"><span>© 2026 Speak Up Côte d'Ivoire</span><span>Cabinet de formation agréé · Abidjan</span><span class="credit">Créé par <a href="https://wa.me/2250749051761?text=Salut%20Dedisson%2C%20j%27ai%20vu%20le%20site%20de%20SPEAKUP%20que%20vous%20avez%20construit." target="_blank" rel="noopener">Dedisson</a></span></div>
   </div>
 </footer>
 
@@ -635,6 +651,24 @@ $('listenAll').addEventListener('click',()=>{run();if(!('speechSynthesis' in win
 $('form').addEventListener('submit',e=>{e.preventDefault();const v=id=>$(id).value;
   const t=`Bonjour Speak Up CI,\nNom : ${v('f-nom')}\nTéléphone : ${v('f-tel')}\nFormation : ${v('f-formation')}\n${v('f-msg')}`;
   window.open('https://wa.me/2250150773924?text='+encodeURIComponent(t),'_blank')});
+</script>
+<div id="ann" role="dialog" aria-modal="true" aria-label="The English Date">
+  <div class="box">
+    <button class="ax" type="button" aria-label="Fermer">✕</button>
+    <img src="https://www.speakupci.net/media/site/english-date.jpg" alt="">
+    <div class="bd">
+      <span class="badge">Bientôt</span>
+      <h3>The English Date</h3>
+      <p>Le rendez-vous où les Ivoiro-anglophones se connectent, pratiquent l'anglais et partagent des expériences dans une ambiance détendue.</p>
+      <div class="acts"><a href="https://wa.me/2250747144268" target="_blank" rel="noopener">Contactez nous</a><button type="button" class="later">Plus tard</button></div>
+    </div>
+  </div>
+</div>
+<script>
+(()=>{const a=document.getElementById('ann'),close=()=>a.classList.remove('on');
+document.getElementById('openAnn').addEventListener('click',e=>{e.preventDefault();a.classList.add('on')});
+a.addEventListener('click',e=>{if(e.target===a||e.target.closest('.ax,.later,.acts a'))close()});
+addEventListener('keydown',e=>{if(e.key==='Escape')close()});})();
 </script>
 </body>
 </html>
